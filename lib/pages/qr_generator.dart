@@ -77,7 +77,7 @@ class _QRGeneratorState extends State<QRGenerator> {
                 data: _qrString,
                 version: 3,
                 size: 250,
-                gapless: false,
+                gapless: true,
                 embeddedImage: AssetImage('assets/Sbs.png'),
                 embeddedImageStyle: QrEmbeddedImageStyle(
                   size: Size(80, 80),
