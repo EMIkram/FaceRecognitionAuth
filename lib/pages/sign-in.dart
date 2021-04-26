@@ -44,6 +44,7 @@ class SignInState extends State<SignIn> {
   String imagePath;
   Size imageSize;
   Face faceDetected;
+  String user_name='';
 
   @override
   void initState() {
@@ -92,7 +93,17 @@ class SignInState extends State<SignIn> {
               setState(() {
                 faceDetected = faces[0];
               });
+              ///my code starts
 
+              _faceNetService.setCurrentPrediction(image, faceDetected);
+              print("prediction");
+              print(_faceNetService.predict());
+              setState(() {
+                user_name=_faceNetService.predict().split(':')[0];
+              });
+              print(user_name);
+
+              ///my code ends
               if (_saving) {
                 _saving = false;
                 _faceNetService.setCurrentPrediction(image, faceDetected);
@@ -119,10 +130,16 @@ class SignInState extends State<SignIn> {
 
     if (faceDetected == null) {
       showDialog(
-          context: context,
-          child: AlertDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
             content: Text('No face detected!'),
-          ));
+          );
+        },
+        // child: AlertDialog(
+        //   content: Text('No face detected!'),
+        // )
+      );
 
       return false;
     } else {
@@ -176,10 +193,12 @@ class SignInState extends State<SignIn> {
                         child: Stack(
                           fit: StackFit.expand,
                           children: <Widget>[
+
                             CameraPreview(_cameraService.cameraController),
                             CustomPaint(
-                              painter: FacePainter(face: faceDetected, imageSize: imageSize),
-                            )
+                              painter: FacePainter(face: faceDetected, imageSize: imageSize,userName:user_name),
+                            ),
+
                           ],
                         ),
                       ),

@@ -33,7 +33,6 @@ class _MyHomePageState extends State<MyHomePage> {
     _setLoading(true);
 
     List<CameraDescription> cameras = await availableCameras();
-
     /// takes the front camera
     cameraDescription = cameras.firstWhere(
       (CameraDescription camera) => camera.lensDirection == CameraLensDirection.front,
@@ -58,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Face recognition auth'),
+        title: Text('Face recognition SBS'),
         leading: Container(),
       ),
       body: !loading

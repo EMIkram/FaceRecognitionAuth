@@ -4,10 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class FacePainter extends CustomPainter {
-  FacePainter({@required this.imageSize, @required this.face});
+  FacePainter({@required this.imageSize, @required this.face,@required this.userName});
   final Size imageSize;
   double scaleX, scaleY;
   Face face;
+  String userName;
   @override
   void paint(Canvas canvas, Size size) {
     if (face == null) return;
@@ -32,6 +33,19 @@ class FacePainter extends CustomPainter {
     canvas.drawRRect(
         _scaleRect(rect: face.boundingBox, imageSize: imageSize, widgetSize: size, scaleX: scaleX, scaleY: scaleY),
         paint);
+    TextSpan span = new TextSpan(
+        style: new TextStyle(color: Colors.green, fontSize: 15),
+        text: userName);
+    TextPainter textPainter = new TextPainter(
+        text: span,
+        textAlign: TextAlign.left,
+        textDirection: TextDirection.ltr);
+    textPainter.layout();
+    textPainter.paint(
+        canvas,
+        new Offset(
+            size.width - (60 + face.boundingBox.left.toDouble()) * scaleX-20,
+            (face.boundingBox.top.toDouble() - 10) * scaleY+20));
   }
 
   @override
